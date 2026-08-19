@@ -1,8 +1,13 @@
+# Dependencias
 node_modules/
 vendor/
 
+# Variables de entorno
 .env
 
+# Builds
 build/
 dist/
 
+# Agente IA
+.agents/
