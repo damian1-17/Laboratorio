@@ -6,7 +6,7 @@
 -- 1. Crear la base de datos (ejecutar conectado a 'postgres')
 -- Este bloque debe ejecutarse desde psql como superusuario
 SELECT 'CREATE DATABASE olist_ecommerce'
-WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'olist_ecommerce')\gexec
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'experiment_tesis')\gexec
 
 \connect olist_ecommerce
 
