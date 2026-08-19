@@ -1,2 +1,4 @@
 allowBuilds:
+  '@apollo/protobufjs': false
   '@nestjs/core': false
+  protobufjs: false
