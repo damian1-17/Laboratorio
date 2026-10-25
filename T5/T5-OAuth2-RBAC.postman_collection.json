@@ -1,0 +1,765 @@
+{
+  "info": {
+    "name": "ms-auth T5 — OAuth 2.0 + RBAC",
+    "description": "Colección de pruebas para el Tratamiento T5 del experimento de tesis.\n\n**Flujo de uso:**\n1. Ejecutar cualquier request de la carpeta '1. Obtener Token' para obtener un access_token.\n2. Copiar el access_token en la variable de colección `ACCESS_TOKEN`.\n3. Ejecutar los requests de '2. Validate — Casos Felices' y '3. Validate — Ataques'.\n\n**Puerto:** 3105\n**Mecanismo:** OAuth 2.0 Client Credentials Grant (RFC 6749 §4.4)\n**Autorización:** RBAC puro — BOLA activo (API1:2023)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3105",
+      "type": "string"
+    },
+    {
+      "key": "ACCESS_TOKEN",
+      "value": "",
+      "description": "Pegar aquí el access_token obtenido de POST /auth/token",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Obtener Token (POST /auth/token)",
+      "description": "OAuth 2.0 Client Credentials Grant.\nObtiene un Access Token opaco (64 chars hex, TTL 15 min).\nGuarda automáticamente el token en la variable ACCESS_TOKEN.",
+      "item": [
+        {
+          "name": "Token — admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const body = pm.response.json();",
+                  "    pm.collectionVariables.set('ACCESS_TOKEN', body.access_token);",
+                  "    pm.test('access_token presente', () => pm.expect(body.access_token).to.be.a('string').and.have.length(64));",
+                  "    pm.test('token_type = Bearer', () => pm.expect(body.token_type).to.eql('Bearer'));",
+                  "    pm.test('expires_in = 900', () => pm.expect(body.expires_in).to.eql(900));",
+                  "    console.log('Token guardado:', body.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"client_credentials\",\n  \"client_id\": \"admin\",\n  \"client_secret\": \"tesis-admin-key-2026\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/token", "host": ["{{BASE_URL}}"], "path": ["auth", "token"] }
+          }
+        },
+        {
+          "name": "Token — seller01",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const body = pm.response.json();",
+                  "    pm.collectionVariables.set('ACCESS_TOKEN', body.access_token);",
+                  "    pm.test('access_token presente', () => pm.expect(body.access_token).to.be.a('string').and.have.length(64));",
+                  "    console.log('Token guardado (seller01):', body.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"client_credentials\",\n  \"client_id\": \"seller01\",\n  \"client_secret\": \"tesis-seller01-key-2026\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/token", "host": ["{{BASE_URL}}"], "path": ["auth", "token"] }
+          }
+        },
+        {
+          "name": "Token — customer01",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const body = pm.response.json();",
+                  "    pm.collectionVariables.set('ACCESS_TOKEN', body.access_token);",
+                  "    pm.test('access_token presente', () => pm.expect(body.access_token).to.be.a('string').and.have.length(64));",
+                  "    console.log('Token guardado (customer01):', body.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"client_credentials\",\n  \"client_id\": \"customer01\",\n  \"client_secret\": \"tesis-customer01-key-2026\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/token", "host": ["{{BASE_URL}}"], "path": ["auth", "token"] }
+          }
+        },
+        {
+          "name": "Token — customer02",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const body = pm.response.json();",
+                  "    pm.collectionVariables.set('ACCESS_TOKEN', body.access_token);",
+                  "    console.log('Token guardado (customer02):', body.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"client_credentials\",\n  \"client_id\": \"customer02\",\n  \"client_secret\": \"tesis-customer02-key-2026\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/token", "host": ["{{BASE_URL}}"], "path": ["auth", "token"] }
+          }
+        },
+        {
+          "name": "[ERROR] Token — client_secret incorrecto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Debe retornar 401', () => pm.response.to.have.status(401));",
+                  "pm.test('error = invalid_client', () => {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.message?.error ?? body.error).to.eql('invalid_client');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"client_credentials\",\n  \"client_id\": \"customer01\",\n  \"client_secret\": \"secreto-incorrecto\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/token", "host": ["{{BASE_URL}}"], "path": ["auth", "token"] }
+          }
+        },
+        {
+          "name": "[ERROR] Token — client_id inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Debe retornar 401', () => pm.response.to.have.status(401));",
+                  "pm.test('error = invalid_client', () => {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.message?.error ?? body.error).to.eql('invalid_client');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"client_credentials\",\n  \"client_id\": \"usuario-inexistente\",\n  \"client_secret\": \"cualquier-cosa\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/token", "host": ["{{BASE_URL}}"], "path": ["auth", "token"] }
+          }
+        },
+        {
+          "name": "[ERROR] Token — grant_type inválido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Debe retornar 400', () => pm.response.to.have.status(400));",
+                  "pm.test('error = unsupported_grant_type', () => {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.message?.error ?? body.error).to.eql('unsupported_grant_type');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"authorization_code\",\n  \"client_id\": \"customer01\",\n  \"client_secret\": \"tesis-customer01-key-2026\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/token", "host": ["{{BASE_URL}}"], "path": ["auth", "token"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Validate — Casos Felices (POST /auth/validate)",
+      "description": "Casos donde el token es válido y el RBAC permite la operación.\nUsa {{ACCESS_TOKEN}} — asegúrese de haberlo obtenido primero.",
+      "item": [
+        {
+          "name": "✅ Admin — query Order (sin resourceOwnerId)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('isValid = true', () => pm.expect(pm.response.json().isValid).to.be.true);",
+                  "pm.test('role = admin', () => pm.expect(pm.response.json().payload?.role).to.eql('admin'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"query\",\n  \"resource\": \"Order\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "✅ Admin — mutation Order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('isValid = true', () => pm.expect(pm.response.json().isValid).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"mutation\",\n  \"resource\": \"Order\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "✅ Seller — query Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('isValid = true', () => pm.expect(pm.response.json().isValid).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"query\",\n  \"resource\": \"Product\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "✅ Seller — query Order (sin verificar seller_id — RBAC)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('isValid = true (RBAC no verifica seller_id)', () => pm.expect(pm.response.json().isValid).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"query\",\n  \"resource\": \"Order\",\n  \"resourceOwnerId\": \"otro-seller-id-cualquiera\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "✅ Customer — query Order propio",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('isValid = true', () => pm.expect(pm.response.json().isValid).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"query\",\n  \"resource\": \"Order\",\n  \"resourceOwnerId\": \"9ef432eb6251297304e76186b10a928d\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "✅ Customer — query Product (lectura libre)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('isValid = true', () => pm.expect(pm.response.json().isValid).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"query\",\n  \"resource\": \"Product\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "✅ Customer — query Seller (lectura libre)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('isValid = true', () => pm.expect(pm.response.json().isValid).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"query\",\n  \"resource\": \"Seller\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Validate — Ataques y Denegaciones",
+      "description": "Escenarios de ataque y reglas RBAC que deben ser rechazadas.",
+      "item": [
+        {
+          "name": "⚠️ BOLA — Customer01 accede a Order de Customer02",
+          "description": "VECTOR BOLA (API1:2023): RBAC no verifica resourceOwnerId.\nCustomer01 puede acceder a los pedidos de customer02.\nEsperado: isValid = true (vulnerabilidad ACTIVA).",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('BOLA ACTIVO — isValid = true (vulnerabilidad no mitigada)', () => {",
+                  "    pm.expect(body.isValid).to.be.true;",
+                  "});",
+                  "console.warn('⚠️ BOLA confirmado: customer01 puede ver órdenes de customer02');"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"query\",\n  \"resource\": \"Order\",\n  \"resourceOwnerId\": \"ed0271e0b7da060a393796590e7b737a\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "⚠️ BOLA — Customer01 hace mutation en Order de Customer02",
+          "description": "VECTOR BOLA en mutation: RBAC permite mutation Order sin verificar propiedad.\nEsperado: isValid = true (vulnerabilidad ACTIVA).",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('BOLA ACTIVO en mutation — isValid = true', () => {",
+                  "    pm.expect(body.isValid).to.be.true;",
+                  "});",
+                  "console.warn('⚠️ BOLA mutation confirmado');"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"mutation\",\n  \"resource\": \"Order\",\n  \"resourceOwnerId\": \"ed0271e0b7da060a393796590e7b737a\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "BA-01 — Token expirado (tesis-customer01-EXPIRED-token-2026)",
+          "description": "Token pre-insertado por el seed con expires_at = 2026-06-01.\nEsperado: isValid = false, error = 'Access Token expired'.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('isValid = false', () => pm.expect(body.isValid).to.be.false);",
+                  "pm.test('error = Access Token expired', () => pm.expect(body.error).to.eql('Access Token expired'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"tesis-customer01-EXPIRED-token-2026\",\n  \"action\": \"query\",\n  \"resource\": \"Order\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "BA-02 — Token falsificado / no registrado",
+          "description": "Token aleatorio no emitido por el servidor.\nEsperado: isValid = false, error = 'Invalid Access Token'.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('isValid = false', () => pm.expect(body.isValid).to.be.false);",
+                  "pm.test('error = Invalid Access Token', () => pm.expect(body.error).to.eql('Invalid Access Token'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"action\": \"query\",\n  \"resource\": \"Order\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "BA-03 — Token revocado (tesis-customer01-REVOKED-token-2026)",
+          "description": "Token pre-insertado por el seed con is_revoked = true.\nEsperado: isValid = false, error = 'Access Token revoked'.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('isValid = false', () => pm.expect(body.isValid).to.be.false);",
+                  "pm.test('error = Access Token revoked', () => pm.expect(body.error).to.eql('Access Token revoked'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"tesis-customer01-REVOKED-token-2026\",\n  \"action\": \"query\",\n  \"resource\": \"Order\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "BA-04 — Token manipulado (alterado 1 char)",
+          "description": "Token real con el último carácter alterado.\nCualquier cambio produce un hash SHA-256 distinto → no encontrado en BD.\nEsperado: isValid = false, error = 'Invalid Access Token'.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('isValid = false', () => pm.expect(body.isValid).to.be.false);",
+                  "pm.test('error = Invalid Access Token (token alterado)', () => pm.expect(body.error).to.eql('Invalid Access Token'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}X\",\n  \"action\": \"query\",\n  \"resource\": \"Order\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "❌ RBAC — Seller intenta mutation en Order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('isValid = false', () => pm.expect(body.isValid).to.be.false);",
+                  "pm.test('error RBAC sellers orders mutation', () => pm.expect(body.error).to.include('Sellers cannot create or modify Orders'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"mutation\",\n  \"resource\": \"Order\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "❌ RBAC — Seller accede a Customer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('isValid = false', () => pm.expect(body.isValid).to.be.false);",
+                  "pm.test('error RBAC sellers customer', () => pm.expect(body.error).to.include(\"Sellers cannot access resource\"));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"query\",\n  \"resource\": \"Customer\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "❌ RBAC — Customer accede a Customer records",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('isValid = false', () => pm.expect(body.isValid).to.be.false);",
+                  "pm.test('error RBAC customers customer records', () => pm.expect(body.error).to.include('Customers cannot access Customer records'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"query\",\n  \"resource\": \"Customer\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "❌ RBAC — Customer mutation Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('isValid = false', () => pm.expect(body.isValid).to.be.false);",
+                  "pm.test('error RBAC customers modify product', () => pm.expect(body.error).to.include(\"Customers cannot modify\"));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"mutation\",\n  \"resource\": \"Product\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "❌ RBAC — Customer mutation Seller",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('isValid = false', () => pm.expect(body.isValid).to.be.false);",
+                  "pm.test('error RBAC customers modify seller', () => pm.expect(body.error).to.include(\"Customers cannot modify\"));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"mutation\",\n  \"resource\": \"Seller\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        },
+        {
+          "name": "❌ Sin token — credential vacío",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('isValid = false (token vacío = Invalid)', () => pm.expect(body.isValid).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"\",\n  \"action\": \"query\",\n  \"resource\": \"Order\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Flujo Completo (token → validate)",
+      "description": "Request encadenado: obtiene el token y lo valida en un solo flujo.",
+      "item": [
+        {
+          "name": "Flujo completo — customer01 query Order",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Pre-request: obtener token fresco para customer01",
+                  "pm.sendRequest({",
+                  "    url: pm.collectionVariables.get('BASE_URL') + '/auth/token',",
+                  "    method: 'POST',",
+                  "    header: { 'Content-Type': 'application/json' },",
+                  "    body: {",
+                  "        mode: 'raw',",
+                  "        raw: JSON.stringify({",
+                  "            grant_type: 'client_credentials',",
+                  "            client_id: 'customer01',",
+                  "            client_secret: 'tesis-customer01-key-2026'",
+                  "        })",
+                  "    }",
+                  "}, (err, res) => {",
+                  "    if (!err && res.code === 200) {",
+                  "        const token = res.json().access_token;",
+                  "        pm.collectionVariables.set('ACCESS_TOKEN', token);",
+                  "        console.log('Token obtenido automáticamente:', token);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test('isValid = true', () => pm.expect(body.isValid).to.be.true);",
+                  "pm.test('role = customer', () => pm.expect(body.payload?.role).to.eql('customer'));",
+                  "pm.test('customer_id presente', () => pm.expect(body.payload?.customer_id).to.be.a('string'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"{{ACCESS_TOKEN}}\",\n  \"action\": \"query\",\n  \"resource\": \"Order\",\n  \"resourceOwnerId\": \"9ef432eb6251297304e76186b10a928d\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/auth/validate", "host": ["{{BASE_URL}}"], "path": ["auth", "validate"] }
+          }
+        }
+      ]
+    }
+  ]
+}
