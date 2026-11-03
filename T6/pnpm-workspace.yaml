@@ -1,0 +1,5 @@
+packages:
+  - "."
+allowBuilds:
+  '@nestjs/core': false
+
