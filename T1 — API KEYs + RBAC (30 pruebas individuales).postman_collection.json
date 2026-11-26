@@ -1,0 +1,1495 @@
+{
+  "info": {
+    "_postman_id": "06c20c3e-6f39-4f2e-9851-ba86379f8c5e",
+    "name": "T1 — API KEYs + RBAC (30 pruebas individuales)",
+    "description": "Colección de pruebas individuales para T1 (API KEYs + RBAC).\nCada request muestra en Test Results el valor calculado de cada métrica.\n\nMétricas:\n- SCo-1-G Controlabilidad: ESC-03 (BOLA)\n- SIn-1-G Integridad:      ESC-03 (BOLA)\n- SAu-1-G Suficiencia:     ESC-04, ESC-05, ESC-06",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39907244",
+    "_collection_link": "https://go.postman.co/collection/39907244-06c20c3e-6f39-4f2e-9851-ba86379f8c5e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "ESC-01: Acceso valido propio",
+      "item": [
+        {
+          "name": "NRO-01 | ESC-01 | R1 | C01 accede a su orden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c01_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c01}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-02 | ESC-01 | R2 | C02 accede a su orden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c02_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c02}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-03 | ESC-01 | R3 | C03 accede a su orden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c03_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c03}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-04 | ESC-01 | R4 | C04 accede a su orden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c04_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c04}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-05 | ESC-01 | R5 | C05 accede a su orden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c05_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c05}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ESC-02: Crear pedido propio",
+      "item": [
+        {
+          "name": "NRO-06 | ESC-02 | R1 | C01 crea un pedido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c01_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus orderPurchaseTimestamp } }",
+                "variables": "{ \"customerId\": \"{{cid_c01}}\", \"productIds\": [\"{{product1}}\", \"{{product2}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-07 | ESC-02 | R2 | C02 crea un pedido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c02_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus orderPurchaseTimestamp } }",
+                "variables": "{ \"customerId\": \"{{cid_c02}}\", \"productIds\": [\"{{product1}}\", \"{{product2}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-08 | ESC-02 | R3 | C03 crea un pedido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c03_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus orderPurchaseTimestamp } }",
+                "variables": "{ \"customerId\": \"{{cid_c03}}\", \"productIds\": [\"{{product1}}\", \"{{product2}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-09 | ESC-02 | R4 | C04 crea un pedido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c04_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus orderPurchaseTimestamp } }",
+                "variables": "{ \"customerId\": \"{{cid_c04}}\", \"productIds\": [\"{{product1}}\", \"{{product2}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-10 | ESC-02 | R5 | C05 crea un pedido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c05_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus orderPurchaseTimestamp } }",
+                "variables": "{ \"customerId\": \"{{cid_c05}}\", \"productIds\": [\"{{product1}}\", \"{{product2}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ESC-03: BOLA — API1:2023",
+      "item": [
+        {
+          "name": "NRO-11 | ESC-03 | R1 | C01 -> orden de C02",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sco = (status === 403) ? 1 : 0;",
+                  "const sin = 1;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 403 (debe bloquear BOLA)', () => { pm.expect(status).to.eql(403); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = ' + sco + ' | 1=bloqueado 0=no bloqueado [VULNERABILIDAD si =0]', () => { pm.expect(sco).to.eql(1); });",
+                  "pm.test('SIn-1-G (Integridad)       = ' + sin + ' | 1=sin modificacion no autorizada (GET read-only)', () => { pm.expect(sin).to.eql(1); });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario BOLA no de autenticacion', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c01_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c02}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-12 | ESC-03 | R2 | C02 -> orden de C01",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sco = (status === 403) ? 1 : 0;",
+                  "const sin = 1;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 403 (debe bloquear BOLA)', () => { pm.expect(status).to.eql(403); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = ' + sco + ' | 1=bloqueado 0=no bloqueado [VULNERABILIDAD si =0]', () => { pm.expect(sco).to.eql(1); });",
+                  "pm.test('SIn-1-G (Integridad)       = ' + sin + ' | 1=sin modificacion no autorizada (GET read-only)', () => { pm.expect(sin).to.eql(1); });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario BOLA no de autenticacion', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c02_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c01}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-13 | ESC-03 | R3 | C03 -> orden de C05",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sco = (status === 403) ? 1 : 0;",
+                  "const sin = 1;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 403 (debe bloquear BOLA)', () => { pm.expect(status).to.eql(403); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = ' + sco + ' | 1=bloqueado 0=no bloqueado [VULNERABILIDAD si =0]', () => { pm.expect(sco).to.eql(1); });",
+                  "pm.test('SIn-1-G (Integridad)       = ' + sin + ' | 1=sin modificacion no autorizada (GET read-only)', () => { pm.expect(sin).to.eql(1); });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario BOLA no de autenticacion', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c03_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c05}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-14 | ESC-03 | R4 | C04 -> orden de C01",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sco = (status === 403) ? 1 : 0;",
+                  "const sin = 1;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 403 (debe bloquear BOLA)', () => { pm.expect(status).to.eql(403); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = ' + sco + ' | 1=bloqueado 0=no bloqueado [VULNERABILIDAD si =0]', () => { pm.expect(sco).to.eql(1); });",
+                  "pm.test('SIn-1-G (Integridad)       = ' + sin + ' | 1=sin modificacion no autorizada (GET read-only)', () => { pm.expect(sin).to.eql(1); });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario BOLA no de autenticacion', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c04_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c01}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-15 | ESC-03 | R5 | C05 -> orden de C03",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sco = (status === 403) ? 1 : 0;",
+                  "const sin = 1;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 403 (debe bloquear BOLA)', () => { pm.expect(status).to.eql(403); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = ' + sco + ' | 1=bloqueado 0=no bloqueado [VULNERABILIDAD si =0]', () => { pm.expect(sco).to.eql(1); });",
+                  "pm.test('SIn-1-G (Integridad)       = ' + sin + ' | 1=sin modificacion no autorizada (GET read-only)', () => { pm.expect(sin).to.eql(1); });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario BOLA no de autenticacion', () => { pm.expect(true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "{{c05_key}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c03}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ESC-04: API Key expirada — API2:2023",
+      "item": [
+        {
+          "name": "NRO-16 | ESC-04 | R1 | C01 - EXPIRED key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial expirada)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer01-EXPIRED-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c01}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-17 | ESC-04 | R2 | C02 - EXPIRED key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial expirada)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer02-EXPIRED-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c02}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-18 | ESC-04 | R3 | C03 - EXPIRED key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial expirada)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer03-EXPIRED-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c03}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-19 | ESC-04 | R4 | C04 - EXPIRED key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial expirada)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer04-EXPIRED-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c04}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-20 | ESC-04 | R5 | C05 - EXPIRED key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial expirada)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer05-EXPIRED-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c05}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ESC-05: API Key invalida/falsificada — API2:2023",
+      "item": [
+        {
+          "name": "NRO-21 | ESC-05 | R1 | C01 - INVALID key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial invalida)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer01-INVALID-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c01}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-22 | ESC-05 | R2 | C02 - INVALID key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial invalida)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer02-INVALID-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c02}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-23 | ESC-05 | R3 | C03 - INVALID key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial invalida)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer03-INVALID-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c03}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-24 | ESC-05 | R4 | C04 - INVALID key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial invalida)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer04-INVALID-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c04}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-25 | ESC-05 | R5 | C05 - INVALID key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial invalida)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer05-INVALID-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c05}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ESC-06: Credencial revocada — API2:2023",
+      "item": [
+        {
+          "name": "NRO-26 | ESC-06 | R1 | C01 - REVOKED key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial revocada)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer01-REVOKED-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus } }",
+                "variables": "{ \"customerId\": \"{{cid_c01}}\", \"productIds\": [\"{{product1}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-27 | ESC-06 | R2 | C02 - REVOKED key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial revocada)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer02-REVOKED-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus } }",
+                "variables": "{ \"customerId\": \"{{cid_c02}}\", \"productIds\": [\"{{product1}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-28 | ESC-06 | R3 | C03 - REVOKED key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial revocada)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer03-REVOKED-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus } }",
+                "variables": "{ \"customerId\": \"{{cid_c03}}\", \"productIds\": [\"{{product1}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-29 | ESC-06 | R4 | C04 - REVOKED key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial revocada)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer04-REVOKED-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus } }",
+                "variables": "{ \"customerId\": \"{{cid_c04}}\", \"productIds\": [\"{{product1}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "NRO-30 | ESC-06 | R5 | C05 - REVOKED key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (debe rechazar credencial revocada)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=credencial invalida rechazada 0=credencial aceptada [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-api-key",
+                "value": "tesis-customer05-REVOKED-key-2026"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus } }",
+                "variables": "{ \"customerId\": \"{{cid_c05}}\", \"productIds\": [\"{{product1}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001/graphql"
+    },
+    {
+      "key": "c01_key",
+      "value": "tesis-customer01-key-2026"
+    },
+    {
+      "key": "c02_key",
+      "value": "tesis-customer02-key-2026"
+    },
+    {
+      "key": "c03_key",
+      "value": "tesis-customer03-key-2026"
+    },
+    {
+      "key": "c04_key",
+      "value": "tesis-customer04-key-2026"
+    },
+    {
+      "key": "c05_key",
+      "value": "tesis-customer05-key-2026"
+    },
+    {
+      "key": "order_c01",
+      "value": "e481f51cbdc54678b7cc49136f2d6af7"
+    },
+    {
+      "key": "order_c02",
+      "value": "136cce7faa42fdb2cefd53fdc79a6098"
+    },
+    {
+      "key": "order_c03",
+      "value": "a2e4c44360b4a57bdff22f3a4630c173"
+    },
+    {
+      "key": "order_c04",
+      "value": "1b9ecfe83cdc259250e1a8aca174f0ad"
+    },
+    {
+      "key": "order_c05",
+      "value": "e58b8168894c93cf61d36c90775acd85"
+    },
+    {
+      "key": "cid_c01",
+      "value": "9ef432eb6251297304e76186b10a928d"
+    },
+    {
+      "key": "cid_c02",
+      "value": "ed0271e0b7da060a393796590e7b737a"
+    },
+    {
+      "key": "cid_c03",
+      "value": "8886130db0ea6e9e70ba0b03d7c0d286"
+    },
+    {
+      "key": "cid_c04",
+      "value": "6d6b50b66d79f80827b6d96751528d30"
+    },
+    {
+      "key": "cid_c05",
+      "value": "65a227fbf7d798cdeadee8c0bea74993"
+    },
+    {
+      "key": "product1",
+      "value": "9dc1a7de274444849c219cff195d0b71"
+    },
+    {
+      "key": "product2",
+      "value": "1e9e8ef04dbcff4541ed26657ea517e5"
+    },
+    {
+      "key": "seller1",
+      "value": "3442f8959a84dea7ee197c632cb2df15"
+    }
+  ]
+}
