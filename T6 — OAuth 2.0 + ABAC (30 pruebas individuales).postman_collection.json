@@ -1,0 +1,1937 @@
+{
+  "info": {
+    "_postman_id": "d211dfb4-ace9-4a8e-ba71-b013ef103d9c",
+    "name": "T6 — OAuth 2.0 + ABAC (30 pruebas individuales)",
+    "description": "Tratamiento T6: OAuth 2.0 + ABAC. Autenticacion con Access Tokens OAuth2 (stateful). Autorizacion ABAC que verifica rol + ownership (resourceOwnerId). BOLA (ESC-03) es BLOQUEADO por ABAC. Puerto ms-auth: 3106.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39907244",
+    "_collection_link": "https://go.postman.co/collection/39907244-610bf29c-0878-42b0-a590-ee6b51a13819?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "ESC-01: Acceso valido propio",
+      "item": [
+        {
+          "name": "NRO-01 | ESC-01 | R1 | C01 accede a su orden",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Obtener Access Token OAuth 2.0 para customer01 desde T6 (puerto 3106)",
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer01', client_secret: pm.collectionVariables.get('c01_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c01', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c01}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c01}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0002-972c08f5"
+        },
+        {
+          "name": "NRO-02 | ESC-01 | R2 | C02 accede a su orden",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer02', client_secret: pm.collectionVariables.get('c02_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c02', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c02}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c02}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0003-7908e74d"
+        },
+        {
+          "name": "NRO-03 | ESC-01 | R3 | C03 accede a su orden",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer03', client_secret: pm.collectionVariables.get('c03_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c03', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c03}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c03}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0004-dc1949eb"
+        },
+        {
+          "name": "NRO-04 | ESC-01 | R4 | C04 accede a su orden",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer04', client_secret: pm.collectionVariables.get('c04_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c04', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c04}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c04}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0005-d1338524"
+        },
+        {
+          "name": "NRO-05 | ESC-01 | R5 | C05 accede a su orden",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer05', client_secret: pm.collectionVariables.get('c05_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c05', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c05}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c05}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0006-37772d87"
+        }
+      ],
+      "description": "Requiere Access Token opaco valido. El pre-request script obtiene el token via POST /auth/token (OAuth 2.0 Client Credentials, puerto 3106) y lo guarda en token_cXX.",
+      "id": "1a22139c10a-t6-0001-6d5b65e2"
+    },
+    {
+      "name": "ESC-02: Crear pedido propio",
+      "item": [
+        {
+          "name": "NRO-06 | ESC-02 | R1 | C01 crea un pedido",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer01', client_secret: pm.collectionVariables.get('c01_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c01', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c01}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus orderPurchaseTimestamp } }",
+                "variables": "{ \"customerId\": \"{{cid_c01}}\", \"productIds\": [\"{{product1}}\", \"{{product2}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0008-6681b2cc"
+        },
+        {
+          "name": "NRO-07 | ESC-02 | R2 | C02 crea un pedido",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer02', client_secret: pm.collectionVariables.get('c02_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c02', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c02}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus orderPurchaseTimestamp } }",
+                "variables": "{ \"customerId\": \"{{cid_c02}}\", \"productIds\": [\"{{product1}}\", \"{{product2}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0009-6fe1c1fd"
+        },
+        {
+          "name": "NRO-08 | ESC-02 | R3 | C03 crea un pedido",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer03', client_secret: pm.collectionVariables.get('c03_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c03', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c03}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus orderPurchaseTimestamp } }",
+                "variables": "{ \"customerId\": \"{{cid_c03}}\", \"productIds\": [\"{{product1}}\", \"{{product2}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0010-ae674e35"
+        },
+        {
+          "name": "NRO-09 | ESC-02 | R4 | C04 crea un pedido",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer04', client_secret: pm.collectionVariables.get('c04_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c04', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c04}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus orderPurchaseTimestamp } }",
+                "variables": "{ \"customerId\": \"{{cid_c04}}\", \"productIds\": [\"{{product1}}\", \"{{product2}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0011-8eec2ca4"
+        },
+        {
+          "name": "NRO-10 | ESC-02 | R5 | C05 crea un pedido",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer05', client_secret: pm.collectionVariables.get('c05_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c05', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario valido autorizado', () => { pm.expect(true).to.be.true; });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c05}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($customerId: String!, $productIds: [String!]!, $sellerId: String!) { createOrder(customer_id: $customerId, product_ids: $productIds, seller_id: $sellerId) { orderId orderStatus orderPurchaseTimestamp } }",
+                "variables": "{ \"customerId\": \"{{cid_c05}}\", \"productIds\": [\"{{product1}}\", \"{{product2}}\"], \"sellerId\": \"{{seller1}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0012-a94dd8b2"
+        }
+      ],
+      "description": "Requiere Access Token opaco valido. El pre-request script obtiene el token via POST /auth/token (OAuth 2.0 Client Credentials, puerto 3106).",
+      "id": "1a22139c10b-t6-0007-f9707199"
+    },
+    {
+      "name": "ESC-03: BOLA — API1:2023 (MITIGADO: ABAC verifica ownership)",
+      "item": [
+        {
+          "name": "NRO-11 | ESC-03 | R1 | C01 -> orden de C02 [ABAC BLOQUEA — BOLA]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer01', client_secret: pm.collectionVariables.get('c01_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c01', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sco = (status === 403) ? 1 : 0;",
+                  "const sin = (status === 200) ? 0 : 1;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 403 | BOLA activo: RBAC no verifica resourceOwnerId -> acceso permitido (200) [VULNERABILIDAD]', () => { pm.expect(status).to.eql(403); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = ' + sco + ' | 1=bloqueado 0=no bloqueado [VULNERABILIDAD si =0]', () => { pm.expect(sco).to.eql(1); });",
+                  "pm.test('SIn-1-G (Integridad)       = ' + sin + ' | 1=sin lectura no autorizada 0=datos expuestos [VULNERABILIDAD si =0]', () => { pm.expect(sin).to.eql(1); });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario BOLA no de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "",
+                  "pm.test(\"ABAC bloquea acceso cruzado (BOLA mitigado)\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.statusCode).to.eql(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c01}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c02}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0014-a40a0f4b"
+        },
+        {
+          "name": "NRO-12 | ESC-03 | R2 | C02 -> orden de C01 [ABAC BLOQUEA — BOLA]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer02', client_secret: pm.collectionVariables.get('c02_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c02', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sco = (status === 403) ? 1 : 0;",
+                  "const sin = (status === 200) ? 0 : 1;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 403 | BOLA activo: RBAC no verifica resourceOwnerId -> acceso permitido (200) [VULNERABILIDAD]', () => { pm.expect(status).to.eql(403); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = ' + sco + ' | 1=bloqueado 0=no bloqueado [VULNERABILIDAD si =0]', () => { pm.expect(sco).to.eql(1); });",
+                  "pm.test('SIn-1-G (Integridad)       = ' + sin + ' | 1=sin lectura no autorizada 0=datos expuestos [VULNERABILIDAD si =0]', () => { pm.expect(sin).to.eql(1); });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario BOLA no de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "",
+                  "pm.test(\"ABAC bloquea acceso cruzado (BOLA mitigado)\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.statusCode).to.eql(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c02}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c01}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0015-687c014d"
+        },
+        {
+          "name": "NRO-13 | ESC-03 | R3 | C03 -> orden de C05 [ABAC BLOQUEA — BOLA]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer03', client_secret: pm.collectionVariables.get('c03_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c03', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sco = (status === 403) ? 1 : 0;",
+                  "const sin = (status === 200) ? 0 : 1;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 403 | BOLA activo: RBAC no verifica resourceOwnerId -> acceso permitido (200) [VULNERABILIDAD]', () => { pm.expect(status).to.eql(403); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = ' + sco + ' | 1=bloqueado 0=no bloqueado [VULNERABILIDAD si =0]', () => { pm.expect(sco).to.eql(1); });",
+                  "pm.test('SIn-1-G (Integridad)       = ' + sin + ' | 1=sin lectura no autorizada 0=datos expuestos [VULNERABILIDAD si =0]', () => { pm.expect(sin).to.eql(1); });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario BOLA no de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "",
+                  "pm.test(\"ABAC bloquea acceso cruzado (BOLA mitigado)\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.statusCode).to.eql(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c03}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c05}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0016-7bf6f64f"
+        },
+        {
+          "name": "NRO-14 | ESC-03 | R4 | C04 -> orden de C01 [ABAC BLOQUEA — BOLA]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer04', client_secret: pm.collectionVariables.get('c04_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c04', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sco = (status === 403) ? 1 : 0;",
+                  "const sin = (status === 200) ? 0 : 1;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 403 | BOLA activo: RBAC no verifica resourceOwnerId -> acceso permitido (200) [VULNERABILIDAD]', () => { pm.expect(status).to.eql(403); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = ' + sco + ' | 1=bloqueado 0=no bloqueado [VULNERABILIDAD si =0]', () => { pm.expect(sco).to.eql(1); });",
+                  "pm.test('SIn-1-G (Integridad)       = ' + sin + ' | 1=sin lectura no autorizada 0=datos expuestos [VULNERABILIDAD si =0]', () => { pm.expect(sin).to.eql(1); });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario BOLA no de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "",
+                  "pm.test(\"ABAC bloquea acceso cruzado (BOLA mitigado)\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.statusCode).to.eql(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c04}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c01}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0017-94c8aaed"
+        },
+        {
+          "name": "NRO-15 | ESC-03 | R5 | C05 -> orden de C03 [ABAC BLOQUEA — BOLA]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.sendRequest({",
+                  "  url: pm.collectionVariables.get('auth_url') + '/auth/token',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ grant_type: 'client_credentials', client_id: 'customer05', client_secret: pm.collectionVariables.get('c05_secret') }) }",
+                  "}, (err, res) => {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.collectionVariables.set('token_c05', res.json().access_token);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sco = (status === 403) ? 1 : 0;",
+                  "const sin = (status === 200) ? 0 : 1;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 403 | BOLA activo: RBAC no verifica resourceOwnerId -> acceso permitido (200) [VULNERABILIDAD]', () => { pm.expect(status).to.eql(403); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = ' + sco + ' | 1=bloqueado 0=no bloqueado [VULNERABILIDAD si =0]', () => { pm.expect(sco).to.eql(1); });",
+                  "pm.test('SIn-1-G (Integridad)       = ' + sin + ' | 1=sin lectura no autorizada 0=datos expuestos [VULNERABILIDAD si =0]', () => { pm.expect(sin).to.eql(1); });",
+                  "pm.test('SAu-1-G (Suficiencia)      = -- | No aplica: escenario BOLA no de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "",
+                  "pm.test(\"ABAC bloquea acceso cruzado (BOLA mitigado)\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.statusCode).to.eql(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token_c05}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c03}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0018-d3c4f275"
+        }
+      ],
+      "description": "T6 usa ABAC puro: el RbacGuard NUNCA evalua resourceOwnerId. Un customer autenticado puede acceder a ordenes de otro customer -> BOLA activo. SCo=0 (falla).",
+      "id": "1a22139c10b-t6-0013-fd0417c5"
+    },
+    {
+      "name": "ESC-04: Access Token expirado — API2:2023 (BA-01)",
+      "item": [
+        {
+          "name": "NRO-16 | ESC-04 | R1 | C01 - Token expirado (BA-01)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token expirado BA-01 debe ser rechazado)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token expirado rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_0s4q}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c01}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0020-f46c6ff5"
+        },
+        {
+          "name": "NRO-17 | ESC-04 | R2 | C02 - Token expirado (BA-01)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token expirado BA-01 debe ser rechazado)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token expirado rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_0xrb}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c02}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0021-cded5269"
+        },
+        {
+          "name": "NRO-18 | ESC-04 | R3 | C03 - Token expirado (BA-01)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token expirado BA-01 debe ser rechazado)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token expirado rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_0u33}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c03}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0022-2c8aeb99"
+        },
+        {
+          "name": "NRO-19 | ESC-04 | R4 | C04 - Token expirado (BA-01)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token expirado BA-01 debe ser rechazado)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token expirado rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_16ea}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c04}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0023-e069ab0d"
+        },
+        {
+          "name": "NRO-20 | ESC-04 | R5 | C05 - Token expirado (BA-01)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token expirado BA-01 debe ser rechazado)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token expirado rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_0w8i}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c05}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0024-3a704b76"
+        }
+      ],
+      "description": "Se intenta usar un Access Token opaco cuyo expires_at esta en el pasado (pre-seeded en BD). OAuthTokenStrategy retorna 'Access Token expired' -> ms-data responde 401. Los tokens en texto plano son conocidos del seed.",
+      "id": "1a22139c10b-t6-0019-d2879b28"
+    },
+    {
+      "name": "ESC-05: Access Token invalido / falsificado — API2:2023 (BA-02/BA-04)",
+      "item": [
+        {
+          "name": "NRO-21 | ESC-05 | R1 | C01 - Token invalido (BA-02/BA-04)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token invalido BA-02 no registrado en BD)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token invalido rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_10ro}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c01}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0026-54af2229"
+        },
+        {
+          "name": "NRO-22 | ESC-05 | R2 | C02 - Token invalido (BA-02/BA-04)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token invalido BA-02 no registrado en BD)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token invalido rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_07kp}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c02}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0027-c0055835"
+        },
+        {
+          "name": "NRO-23 | ESC-05 | R3 | C03 - Token invalido (BA-02/BA-04)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token invalido BA-02 no registrado en BD)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token invalido rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_07u7}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c03}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0028-658d180b"
+        },
+        {
+          "name": "NRO-24 | ESC-05 | R4 | C04 - Token invalido (BA-02/BA-04)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token invalido BA-02 no registrado en BD)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token invalido rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_0w0h}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c04}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0029-b276ce06"
+        },
+        {
+          "name": "NRO-25 | ESC-05 | R5 | C05 - Token invalido (BA-02/BA-04)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token invalido BA-02 no registrado en BD)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token invalido rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_0hob}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c05}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0030-6bcee8bc"
+        }
+      ],
+      "description": "Se intenta usar un Access Token opaco que NO existe en la BD (valor arbitrario no registrado). OAuthTokenStrategy no encuentra el hash en oauth_tokens -> retorna 'Invalid Access Token' -> ms-data responde 401.",
+      "id": "1a22139c10b-t6-0025-5a27e601"
+    },
+    {
+      "name": "ESC-06: Access Token revocado — API2:2023 (BA-03)",
+      "item": [
+        {
+          "name": "NRO-26 | ESC-06 | R1 | C01 - Token revocado (BA-03)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token revocado BA-03 is_revoked=true debe ser rechazado)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token revocado rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_0tcs}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c01}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0032-31509aa1"
+        },
+        {
+          "name": "NRO-27 | ESC-06 | R2 | C02 - Token revocado (BA-03)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token revocado BA-03 is_revoked=true debe ser rechazado)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token revocado rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_0ob8}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c02}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0033-83226281"
+        },
+        {
+          "name": "NRO-28 | ESC-06 | R3 | C03 - Token revocado (BA-03)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token revocado BA-03 is_revoked=true debe ser rechazado)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token revocado rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_0v9m}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c03}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0034-251589aa"
+        },
+        {
+          "name": "NRO-29 | ESC-06 | R4 | C04 - Token revocado (BA-03)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token revocado BA-03 is_revoked=true debe ser rechazado)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token revocado rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_068q}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c04}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0035-aa304593"
+        },
+        {
+          "name": "NRO-30 | ESC-06 | R5 | C05 - Token revocado (BA-03)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const status = pm.response.code;",
+                  "const sau = (status === 401) ? 1 : 0;",
+                  "pm.test('HTTP Obtenido: ' + status + ' | Esperado: 401 (Access Token revocado BA-03 is_revoked=true debe ser rechazado)', () => { pm.expect(status).to.eql(401); });",
+                  "pm.test('SCo-1-G (Controlabilidad) = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SIn-1-G (Integridad)       = -- | No aplica: escenario de autenticacion', () => { pm.expect(true).to.be.true; });",
+                  "pm.test('SAu-1-G (Suficiencia)      = ' + sau + ' | 1=token revocado rechazado 0=token aceptado [FALLA si =0]', () => { pm.expect(sau).to.eql(1); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token_0zre}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetOrder($order_id: String!) { getOrder(order_id: $order_id) { orderId orderStatus customerId } }",
+                "variables": "{ \"order_id\": \"{{order_c05}}\" }"
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}",
+              "host": [
+                "{{base_url}}"
+              ]
+            }
+          },
+          "response": [],
+          "id": "1a22139c10b-t6-0036-c81a800a"
+        }
+      ],
+      "description": "Se intenta usar un Access Token opaco con is_revoked=true (pre-seeded en BD con expires_at 2027). OAuthTokenStrategy encuentra el token pero detecta is_revoked=true -> 'Access Token revoked' -> ms-data responde 401. Diferencia clave vs T1/T2: T6 SI puede revocar tokens individuales (token stateful).",
+      "id": "1a22139c10b-t6-0031-ecc53fa7"
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001/graphql"
+    },
+    {
+      "key": "auth_url",
+      "value": "http://localhost:3106"
+    },
+    {
+      "key": "c01_secret",
+      "value": "tesis-customer01-key-2026"
+    },
+    {
+      "key": "c02_secret",
+      "value": "tesis-customer02-key-2026"
+    },
+    {
+      "key": "c03_secret",
+      "value": "tesis-customer03-key-2026"
+    },
+    {
+      "key": "c04_secret",
+      "value": "tesis-customer04-key-2026"
+    },
+    {
+      "key": "c05_secret",
+      "value": "tesis-customer05-key-2026"
+    },
+    {
+      "key": "order_c01",
+      "value": "e481f51cbdc54678b7cc49136f2d6af7"
+    },
+    {
+      "key": "order_c02",
+      "value": "136cce7faa42fdb2cefd53fdc79a6098"
+    },
+    {
+      "key": "order_c03",
+      "value": "a2e4c44360b4a57bdff22f3a4630c173"
+    },
+    {
+      "key": "order_c04",
+      "value": "1b9ecfe83cdc259250e1a8aca174f0ad"
+    },
+    {
+      "key": "order_c05",
+      "value": "e58b8168894c93cf61d36c90775acd85"
+    },
+    {
+      "key": "cid_c01",
+      "value": "9ef432eb6251297304e76186b10a928d"
+    },
+    {
+      "key": "cid_c02",
+      "value": "ed0271e0b7da060a393796590e7b737a"
+    },
+    {
+      "key": "cid_c03",
+      "value": "8886130db0ea6e9e70ba0b03d7c0d286"
+    },
+    {
+      "key": "cid_c04",
+      "value": "6d6b50b66d79f80827b6d96751528d30"
+    },
+    {
+      "key": "cid_c05",
+      "value": "65a227fbf7d798cdeadee8c0bea74993"
+    },
+    {
+      "key": "product1",
+      "value": "9dc1a7de274444849c219cff195d0b71"
+    },
+    {
+      "key": "product2",
+      "value": "1e9e8ef04dbcff4541ed26657ea517e5"
+    },
+    {
+      "key": "seller1",
+      "value": "3442f8959a84dea7ee197c632cb2df15"
+    },
+    {
+      "key": "token_c01",
+      "value": ""
+    },
+    {
+      "key": "token_c02",
+      "value": ""
+    },
+    {
+      "key": "token_c03",
+      "value": ""
+    },
+    {
+      "key": "token_c04",
+      "value": ""
+    },
+    {
+      "key": "token_c05",
+      "value": ""
+    },
+    {
+      "key": "bearer_token_0s4q",
+      "value": "tesis-customer01-EXPIRED-token-2026",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_0xrb",
+      "value": "tesis-customer02-EXPIRED-token-2026",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_0u33",
+      "value": "tesis-customer03-EXPIRED-token-2026",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_16ea",
+      "value": "tesis-customer04-EXPIRED-token-2026",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_0w8i",
+      "value": "tesis-customer05-EXPIRED-token-2026",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_10ro",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_07kp",
+      "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_07u7",
+      "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_0w0h",
+      "value": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_0hob",
+      "value": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_0tcs",
+      "value": "tesis-customer01-REVOKED-token-2026",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_0ob8",
+      "value": "tesis-customer02-REVOKED-token-2026",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_0v9m",
+      "value": "tesis-customer03-REVOKED-token-2026",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_068q",
+      "value": "tesis-customer04-REVOKED-token-2026",
+      "type": "default"
+    },
+    {
+      "key": "bearer_token_0zre",
+      "value": "tesis-customer05-REVOKED-token-2026",
+      "type": "default"
+    }
+  ]
+}
