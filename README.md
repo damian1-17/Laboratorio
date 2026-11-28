@@ -21,7 +21,7 @@ Ejecuta el siguiente comando **desde la raíz del proyecto** con un superusuario
 Este script crea la base de datos, las tablas y carga todos los datos del dataset:
 
 ```powershell
-psql -U postgres -f "experiment/dataset/setup_database.sql"
+psql -U postgres -f "setup_database.sql"
 ```
 
 > **Nota:** Si `psql` no está en el PATH, usa la ruta completa, por ejemplo:

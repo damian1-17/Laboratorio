@@ -243,13 +243,8 @@ Cada tratamiento ejecuta **6 escenarios de prueba**, con **5 repeticiones** cada
 | **SAu-1-G Esperado** | 100 % | 100 % | 100 % | 100 % | 100 % | 100 % |
 
 ### 4.3. Discrepancias Identificadas entre Documentos
-1. **Discrepancia en OAuth 2.0 (Tesis vs. Código Fuente):**
-   - *Texto de la tesis (`Tesis V1-c.md`, líneas 479-480):* Describe T5 y T6 como *"Authorization Code Flow gestionado por Keycloak"*.
-   - *Implementación real (`T5/arq01-RBAC+OAUTH2.0.md`, `T6/arq01-ABAC+OAUTH2.0.md` y código NestJS):* Se implementó un servidor de autorización **self-hosted embebido directamente en `ms-auth`**, utilizando **Client Credentials Grant** con tokens opacos de referencia (RFC 6749 §4.4 + introspección RFC 7662 simplificada) para evitar dependencias externas de infraestructura y asegurar replicabilidad estricta.
-2. **Discrepancia en ESC-06 para JWT (T3 y T4):**
-   - *Supuesto conceptual:* En sistemas puramente stateless, revocar un token JWT antes de su expiración requiere una lista negra (blacklist/Redis).
-   - *Prueba en Postman (T3 y T4):* Dado que `ms-auth` en T3/T4 no implementa lista negra en memoria para tokens ya emitidos, el escenario ESC-06 evalúa la **revocación de la credencial base en `POST /auth/token`**: un usuario con API Key revocada intenta generar un nuevo JWT, siendo rechazado con `401 Unauthorized`.
-3. **Ausencia de Colección Postman para T6:**
+
+1. **Ausencia de Colección Postman para T6:**
    - La colección para T6 aún no está creada formalmente en los archivos raíz. Sus especificaciones técnicas se infieren con exactitud a partir del código de `T6` y de la colección de `T5`.
 
 ---

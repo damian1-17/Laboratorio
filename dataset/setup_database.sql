@@ -5,10 +5,10 @@
 
 -- 1. Crear la base de datos (ejecutar conectado a 'postgres')
 -- Este bloque debe ejecutarse desde psql como superusuario
-SELECT 'CREATE DATABASE experiment_tesis'
-WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'experiment_tesis')\gexec
+SELECT 'CREATE DATABASE olist_ecommerce'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'olist_ecommerce')\gexec
 
-\connect experiment_tesis
+\connect olist_ecommerce
 
 -- =============================================================
 -- 2. CREACIÓN DE TABLAS
@@ -136,31 +136,31 @@ CREATE INDEX idx_reviews_score ON order_reviews(review_score);
 -- =============================================================
 
 \echo '>>> Cargando customers...'
-\copy customers FROM 'c:/Users/diego/OneDrive/Documentos/Brazilian E-Commerce Public Dataset by Olist/Brazilian E-Commerce Public Dataset by Olist/olist_customers_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
+\copy customers FROM 'c:/Users/diego/Documents/Laboratorio/dataset/Brazilian E-Commerce Public Dataset by Olist/olist_customers_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
 
 \echo '>>> Cargando geolocation...'
-\copy geolocation FROM 'c:/Users/diego/OneDrive/Documentos/Brazilian E-Commerce Public Dataset by Olist/Brazilian E-Commerce Public Dataset by Olist/olist_geolocation_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
+\copy geolocation FROM 'c:/Users/diego/Documents/Laboratorio/dataset/Brazilian E-Commerce Public Dataset by Olist/olist_geolocation_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
 
 \echo '>>> Cargando sellers...'
-\copy sellers FROM 'c:/Users/diego/OneDrive/Documentos/Brazilian E-Commerce Public Dataset by Olist/Brazilian E-Commerce Public Dataset by Olist/olist_sellers_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
+\copy sellers FROM 'c:/Users/diego/Documents/Laboratorio/dataset/Brazilian E-Commerce Public Dataset by Olist/olist_sellers_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
 
 \echo '>>> Cargando product_category_name_translation...'
-\copy product_category_name_translation FROM 'c:/Users/diego/OneDrive/Documentos/Brazilian E-Commerce Public Dataset by Olist/Brazilian E-Commerce Public Dataset by Olist/product_category_name_translation.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
+\copy product_category_name_translation FROM 'c:/Users/diego/Documents/Laboratorio/dataset/Brazilian E-Commerce Public Dataset by Olist/product_category_name_translation.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
 
 \echo '>>> Cargando products...'
-\copy products FROM 'c:/Users/diego/OneDrive/Documentos/Brazilian E-Commerce Public Dataset by Olist/Brazilian E-Commerce Public Dataset by Olist/olist_products_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
+\copy products FROM 'c:/Users/diego/Documents/Laboratorio/dataset/Brazilian E-Commerce Public Dataset by Olist/olist_products_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
 
 \echo '>>> Cargando orders...'
-\copy orders FROM 'c:/Users/diego/OneDrive/Documentos/Brazilian E-Commerce Public Dataset by Olist/Brazilian E-Commerce Public Dataset by Olist/olist_orders_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
+\copy orders FROM 'c:/Users/diego/Documents/Laboratorio/dataset/Brazilian E-Commerce Public Dataset by Olist/olist_orders_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
 
 \echo '>>> Cargando order_items...'
-\copy order_items FROM 'c:/Users/diego/OneDrive/Documentos/Brazilian E-Commerce Public Dataset by Olist/Brazilian E-Commerce Public Dataset by Olist/olist_order_items_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
+\copy order_items FROM 'c:/Users/diego/Documents/Laboratorio/dataset/Brazilian E-Commerce Public Dataset by Olist/olist_order_items_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
 
 \echo '>>> Cargando order_payments...'
-\copy order_payments FROM 'c:/Users/diego/OneDrive/Documentos/Brazilian E-Commerce Public Dataset by Olist/Brazilian E-Commerce Public Dataset by Olist/olist_order_payments_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
+\copy order_payments FROM 'c:/Users/diego/Documents/Laboratorio/dataset/Brazilian E-Commerce Public Dataset by Olist/olist_order_payments_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
 
 \echo '>>> Cargando order_reviews...'
-\copy order_reviews FROM 'c:/Users/diego/OneDrive/Documentos/Brazilian E-Commerce Public Dataset by Olist/Brazilian E-Commerce Public Dataset by Olist/olist_order_reviews_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
+\copy order_reviews FROM 'c:/Users/diego/Documents/Laboratorio/dataset/Brazilian E-Commerce Public Dataset by Olist/olist_order_reviews_dataset.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',', QUOTE '"', NULL '');
 
 -- =============================================================
 -- 4. VERIFICACIÓN: conteo de registros por tabla

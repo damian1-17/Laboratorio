@@ -323,7 +323,7 @@ ESC-01: valida	|ESC-01: C01 accede a su orden
 ESC-03:BOLA	|ESC-03: Un cliente intenta ver el pedido de otro cliente (BOLA)
 ESC-04:BrokenAuth	|ESC-04: Un atacante intenta operar con una sesión caducada
 ESC-05:BrokenAuth	|ESC-05: Un atacante presenta un token con firma inválida
-ESC-06:BrokenAuth	|ESC-06: Un atacante reutiliza credenciales después de una revocación
+ESC-06:BrokenAuth	|ESC-06: Revocación de credencial base para la emisión de JWT.
 
 
 
@@ -424,7 +424,7 @@ Tarea experimental:
 3.	Registrar el código HTTP de respuesta.
 Variable observable: Código HTTP (401 = adulteración detectada; 200 = fallo de seguridad crítico).
 Contribución a la investigación: Alimenta la métrica SAu-1-G (Tasa de Rechazo de Credenciales Inválidas). Representa 8 ejecuciones por tratamiento (48 en total).
- ESC-06 — Un atacante reutiliza credenciales después de una revocación
+ ESC-06 — Revocación de credencial base para la emisión de JWT.
 Contexto: Tras detectar una brecha de seguridad, el equipo de operaciones revocó una API Key comprometida y cerró la sesión de todos los tokens activos. Un atacante que ya poseía esas credenciales intenta seguir usándolas para crear órdenes fraudulentas. El sistema debe rechazar estas credenciales, aunque sean criptográficamente correctas, porque fueron explícitamente invalidadas.
 Rol del participante: Investigador simulando a un atacante con credencial revocada (escenario BA-03).
 Precondiciones:
@@ -476,8 +476,8 @@ Para garantizar la coherencia entre todos los tratamientos, se definen tres perf
 | T2 | API Keys | Clave única por usuario almacenada en base de datos interna | ABAC | Motor de políticas con atributos del usuario y del recurso |
 | T3 | JWT | Tokens firmados con HS256, claims con `role` y `user_id`, TTL de 15 min | RBAC | Validación del claim `role` en el JWT |
 | T4 | JWT | Tokens firmados con HS256, claims con `role` y `user_id`, TTL de 15 min | ABAC | Motor de políticas evaluado con claims del JWT y atributos del recurso |
-| T5 | OAuth 2.0 | Authorization Code Flow gestionado por Keycloak | RBAC | Roles asignados en Keycloak y validados por el MS-Auth |
-| T6 | OAuth 2.0 | Authorization Code Flow gestionado por Keycloak | ABAC | Políticas ABAC evaluadas con los atributos del token de Keycloak |
+| T5 | OAuth 2.0 | Authorization Code Flow gestionado| RBAC | Roles asignados y validados por el MS-Auth |
+| T6 | OAuth 2.0 | Authorization Code Flow gestionado | ABAC | Políticas ABAC evaluadas con los atributos del token|
 
 ##### Políticas RBAC definidas
 

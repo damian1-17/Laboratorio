@@ -29,7 +29,7 @@ import { RbacGuard } from './auth-core/guards/rbac.guard';
       password: process.env.DB_PASSWORD || '123',
       database: process.env.DB_DATABASE || 'olist_ecommerce',
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: true,
     }),
     TypeOrmModule.forFeature([OAuthClient, OAuthToken]),
   ],
