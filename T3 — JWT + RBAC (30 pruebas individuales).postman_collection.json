@@ -1012,7 +1012,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_08eb}}"
+                "value": "Bearer {{bearer_token_08eb}}"
               }
             ],
             "body": {
@@ -1058,7 +1058,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0rw5}}"
+                "value": "Bearer {{bearer_token_0rw5}}"
               }
             ],
             "body": {
@@ -1104,7 +1104,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_13x2}}"
+                "value": "Bearer {{bearer_token_13x2}}"
               }
             ],
             "body": {
@@ -1150,7 +1150,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0rhm}}"
+                "value": "Bearer {{bearer_token_0rhm}}"
               }
             ],
             "body": {
@@ -1196,7 +1196,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0219}}"
+                "value": "Bearer {{bearer_token_0219}}"
               }
             ],
             "body": {
@@ -1216,7 +1216,22 @@
           "response": []
         }
       ],
-      "description": "Se intenta usar un JWT con exp en el pasado. ms-auth retorna 'JWT expired (BA-01)' -> ms-data responde 401. El JWT expirado se construye directamente como token hardcodeado con exp pasado."
+      "description": "Se intenta usar un JWT con exp en el pasado. ms-auth retorna 'JWT expired (BA-01)' -> ms-data responde 401. El JWT expirado se construye directamente como token hardcodeado con exp pasado.",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set('bearer_token_08eb', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lcjAxIiwidXNlcm5hbWUiOiJjdXN0b21lcjAxIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzA0MDY3MjAwLCJleHAiOjE3MDQwNjcyMDF9.OFAJ5aKisHmVqG__-GS1sxLdTAb1Lln4UPftOMGwBso');",
+              "pm.collectionVariables.set('bearer_token_0rw5', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lcjAyIiwidXNlcm5hbWUiOiJjdXN0b21lcjAyIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzA0MDY3MjAwLCJleHAiOjE3MDQwNjcyMDF9._Sks-kEZ9h4xqTMsy1BFVf_NyuvMnihSWOZeKxeqPNg');",
+              "pm.collectionVariables.set('bearer_token_13x2', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lcjAzIiwidXNlcm5hbWUiOiJjdXN0b21lcjAzIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzA0MDY3MjAwLCJleHAiOjE3MDQwNjcyMDF9.QFFLj2rFt04QF8DQ1BoMDUfbEG9AjcCXyGARLbB9mXc');",
+              "pm.collectionVariables.set('bearer_token_0rhm', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lcjA0IiwidXNlcm5hbWUiOiJjdXN0b21lcjA0Iiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzA0MDY3MjAwLCJleHAiOjE3MDQwNjcyMDF9.OlabOOFVS730dwx3nODDYneeQwK7D62Ts4C2GleDxEc');",
+              "pm.collectionVariables.set('bearer_token_0219', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lcjA1IiwidXNlcm5hbWUiOiJjdXN0b21lcjA1Iiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzA0MDY3MjAwLCJleHAiOjE3MDQwNjcyMDF9.2Flcpn39SV8MgYwfh-7Hbbrx_gh1G-5ydA81vx3PhT8');"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "ESC-05: JWT con firma invalida/falsificada — API2:2023 (BA-02)",
@@ -1248,7 +1263,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_13zu}}"
+                "value": "Bearer {{bearer_token_13zu}}"
               }
             ],
             "body": {
@@ -1294,7 +1309,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0fy1}}"
+                "value": "Bearer {{bearer_token_0fy1}}"
               }
             ],
             "body": {
@@ -1340,7 +1355,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_07vc}}"
+                "value": "Bearer {{bearer_token_07vc}}"
               }
             ],
             "body": {
@@ -1386,7 +1401,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_11ar}}"
+                "value": "Bearer {{bearer_token_11ar}}"
               }
             ],
             "body": {
@@ -1432,7 +1447,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0t2p}}"
+                "value": "Bearer {{bearer_token_0t2p}}"
               }
             ],
             "body": {
@@ -1452,7 +1467,22 @@
           "response": []
         }
       ],
-      "description": "Se usa un JWT con firma incorrecta (secret diferente). ms-auth retorna 'JWT invalid signature (BA-02)' -> ms-data responde 401."
+      "description": "Se usa un JWT con firma incorrecta (secret diferente). ms-auth retorna 'JWT invalid signature (BA-02)' -> ms-data responde 401.",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set('bearer_token_13zu', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lcjAxIiwidXNlcm5hbWUiOiJjdXN0b21lcjAxIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0Ijo5MDAwMDAwMDAwLCJleHAiOjk5OTk5OTk5OTl9.IUe0w0OkTiBh2P5egPIHjBJl2pVJTomdQoyI1BSW4w4');",
+              "pm.collectionVariables.set('bearer_token_0fy1', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lcjAyIiwidXNlcm5hbWUiOiJjdXN0b21lcjAyIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0Ijo5MDAwMDAwMDAwLCJleHAiOjk5OTk5OTk5OTl9.y6zKaGuXoAz_HYLUWgrojBQP-0z6Ux6MG8D_E88RZgY');",
+              "pm.collectionVariables.set('bearer_token_07vc', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lcjAzIiwidXNlcm5hbWUiOiJjdXN0b21lcjAzIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0Ijo5MDAwMDAwMDAwLCJleHAiOjk5OTk5OTk5OTl9.RthjWTc8Tnj_IRZ2Arx5PFkeklsfwquwifvUN6LKgHo');",
+              "pm.collectionVariables.set('bearer_token_11ar', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lcjA0IiwidXNlcm5hbWUiOiJjdXN0b21lcjA0Iiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0Ijo5MDAwMDAwMDAwLCJleHAiOjk5OTk5OTk5OTl9.NTtwqkFaqAyWjQ09-0rrYJzdo6IGyfsI7LJwTpJKkPA');",
+              "pm.collectionVariables.set('bearer_token_0t2p', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lcjA1IiwidXNlcm5hbWUiOiJjdXN0b21lcjA1Iiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0Ijo5MDAwMDAwMDAwLCJleHAiOjk5OTk5OTk5OTl9.DbnGx_jkqp9w9hqb8-MdMStXF54wBzG7gg79B8xFuLs');"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "ESC-06: API Key revocada — no puede obtener JWT — API2:2023",
@@ -1779,43 +1809,53 @@
     },
     {
       "key": "bearer_token_08eb",
-      "secret": true
+      "value": "",
+      "type": "default"
     },
     {
       "key": "bearer_token_0rw5",
-      "secret": true
+      "value": "",
+      "type": "default"
     },
     {
       "key": "bearer_token_13x2",
-      "secret": true
+      "value": "",
+      "type": "default"
     },
     {
       "key": "bearer_token_0rhm",
-      "secret": true
+      "value": "",
+      "type": "default"
     },
     {
       "key": "bearer_token_0219",
-      "secret": true
+      "value": "",
+      "type": "default"
     },
     {
       "key": "bearer_token_13zu",
-      "secret": true
+      "value": "",
+      "type": "default"
     },
     {
       "key": "bearer_token_0fy1",
-      "secret": true
+      "value": "",
+      "type": "default"
     },
     {
       "key": "bearer_token_07vc",
-      "secret": true
+      "value": "",
+      "type": "default"
     },
     {
       "key": "bearer_token_11ar",
-      "secret": true
+      "value": "",
+      "type": "default"
     },
     {
       "key": "bearer_token_0t2p",
-      "secret": true
+      "value": "",
+      "type": "default"
     }
   ]
 }

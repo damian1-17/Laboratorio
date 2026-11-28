@@ -1012,7 +1012,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0s4q}}"
+                "value": "Bearer {{bearer_token_0s4q}}"
               }
             ],
             "body": {
@@ -1058,7 +1058,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0xrb}}"
+                "value": "Bearer {{bearer_token_0xrb}}"
               }
             ],
             "body": {
@@ -1104,7 +1104,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0u33}}"
+                "value": "Bearer {{bearer_token_0u33}}"
               }
             ],
             "body": {
@@ -1150,7 +1150,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_16ea}}"
+                "value": "Bearer {{bearer_token_16ea}}"
               }
             ],
             "body": {
@@ -1196,7 +1196,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0w8i}}"
+                "value": "Bearer {{bearer_token_0w8i}}"
               }
             ],
             "body": {
@@ -1248,7 +1248,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_10ro}}"
+                "value": "Bearer {{bearer_token_10ro}}"
               }
             ],
             "body": {
@@ -1294,7 +1294,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_07kp}}"
+                "value": "Bearer {{bearer_token_07kp}}"
               }
             ],
             "body": {
@@ -1340,7 +1340,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_07u7}}"
+                "value": "Bearer {{bearer_token_07u7}}"
               }
             ],
             "body": {
@@ -1386,7 +1386,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0w0h}}"
+                "value": "Bearer {{bearer_token_0w0h}}"
               }
             ],
             "body": {
@@ -1432,7 +1432,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0hob}}"
+                "value": "Bearer {{bearer_token_0hob}}"
               }
             ],
             "body": {
@@ -1484,7 +1484,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0tcs}}"
+                "value": "Bearer {{bearer_token_0tcs}}"
               }
             ],
             "body": {
@@ -1530,7 +1530,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0ob8}}"
+                "value": "Bearer {{bearer_token_0ob8}}"
               }
             ],
             "body": {
@@ -1576,7 +1576,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0v9m}}"
+                "value": "Bearer {{bearer_token_0v9m}}"
               }
             ],
             "body": {
@@ -1622,7 +1622,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_068q}}"
+                "value": "Bearer {{bearer_token_068q}}"
               }
             ],
             "body": {
@@ -1668,7 +1668,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "{{bearer_token_0zre}}"
+                "value": "Bearer {{bearer_token_0zre}}"
               }
             ],
             "body": {
@@ -1794,63 +1794,78 @@
     },
     {
       "key": "bearer_token_0s4q",
-      "secret": true
+      "value": "tesis-customer01-EXPIRED-token-2026",
+      "type": "default"
     },
     {
       "key": "bearer_token_0xrb",
-      "secret": true
+      "value": "tesis-customer02-EXPIRED-token-2026",
+      "type": "default"
     },
     {
       "key": "bearer_token_0u33",
-      "secret": true
+      "value": "tesis-customer03-EXPIRED-token-2026",
+      "type": "default"
     },
     {
       "key": "bearer_token_16ea",
-      "secret": true
+      "value": "tesis-customer04-EXPIRED-token-2026",
+      "type": "default"
     },
     {
       "key": "bearer_token_0w8i",
-      "secret": true
+      "value": "tesis-customer05-EXPIRED-token-2026",
+      "type": "default"
     },
     {
       "key": "bearer_token_10ro",
-      "secret": true
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "default"
     },
     {
       "key": "bearer_token_07kp",
-      "secret": true
+      "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "type": "default"
     },
     {
       "key": "bearer_token_07u7",
-      "secret": true
+      "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "type": "default"
     },
     {
       "key": "bearer_token_0w0h",
-      "secret": true
+      "value": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "type": "default"
     },
     {
       "key": "bearer_token_0hob",
-      "secret": true
+      "value": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "type": "default"
     },
     {
       "key": "bearer_token_0tcs",
-      "secret": true
+      "value": "tesis-customer01-REVOKED-token-2026",
+      "type": "default"
     },
     {
       "key": "bearer_token_0ob8",
-      "secret": true
+      "value": "tesis-customer02-REVOKED-token-2026",
+      "type": "default"
     },
     {
       "key": "bearer_token_0v9m",
-      "secret": true
+      "value": "tesis-customer03-REVOKED-token-2026",
+      "type": "default"
     },
     {
       "key": "bearer_token_068q",
-      "secret": true
+      "value": "tesis-customer04-REVOKED-token-2026",
+      "type": "default"
     },
     {
       "key": "bearer_token_0zre",
-      "secret": true
+      "value": "tesis-customer05-REVOKED-token-2026",
+      "type": "default"
     }
   ]
 }
